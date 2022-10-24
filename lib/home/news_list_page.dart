@@ -44,9 +44,12 @@ class NewsListPage extends StatelessWidget {
         Navigator.pushNamed(context, DetailPage.routeName, arguments: article);
       },
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      leading: Image.network(
-        article.urlToImage,
-        width: 100,
+      leading: Hero(
+        tag: article.urlToImage,
+        child: Image.network(
+          article.urlToImage,
+          width: 100,
+        ),
       ),
       title: Text(article.title),
       subtitle: Text(article.author),
