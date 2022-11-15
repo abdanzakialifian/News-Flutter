@@ -69,12 +69,24 @@ class _ArticleListPageState extends State<ArticleListPage> {
           } else if (snapshot.hasError) {
             return Center(
               child: Material(
-                child: Text(snapshot.error.toString()),
+                child: ElevatedButton(
+                  onPressed: () {
+                    ApiService().topHeadline();
+                  },
+                  child: const Text("Refresh"),
+                ),
               ),
             );
           } else {
-            return const Material(
-              child: Text(""),
+            return Center(
+              child: Material(
+                child: ElevatedButton(
+                  onPressed: () {
+                    ApiService().topHeadline();
+                  },
+                  child: const Text("Refresh"),
+                ),
+              ),
             );
           }
         }
