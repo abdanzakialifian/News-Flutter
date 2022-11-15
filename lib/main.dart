@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/ui/detail/detail_page.dart';
-import 'package:news_app/data/model/article.dart';
+import 'package:news_app/ui/detail/article_detail_page.dart';
+import 'package:news_app/data/model/article_result.dart';
 import 'package:news_app/common/style.dart';
 import 'package:news_app/ui/webview/article_web_view.dart';
-import '../home/home_page.dart';
+import 'ui/home/home_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(elevation: 0),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: secondaryColor,
-            onPrimary: Colors.white,
+            backgroundColor: secondaryColor,
+            foregroundColor: Colors.white,
             textStyle: const TextStyle(),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomePage.routeName,
       routes: {
         HomePage.routeName: (context) => const HomePage(),
-        DetailPage.routeName: (context) => DetailPage(
+        ArticleDetailPage.routeName: (context) => ArticleDetailPage(
             article: ModalRoute.of(context)?.settings.arguments as Article),
         ArticleWebView.routeName: (context) => ArticleWebView(
             url: ModalRoute.of(context)?.settings.arguments as String)

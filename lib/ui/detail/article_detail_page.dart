@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/data/model/article.dart';
 import 'package:news_app/ui/webview/article_web_view.dart';
 
-class DetailPage extends StatelessWidget {
+import '../../data/model/article_result.dart';
+
+class ArticleDetailPage extends StatelessWidget {
   static const routeName = "/article_detail";
 
   final Article article;
 
-  const DetailPage({Key? key, required this.article}) : super(key: key);
+  const ArticleDetailPage({Key? key, required this.article}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(article.title),
+        title: Text(article.title ?? ""),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Hero(
-              tag: article.urlToImage,
-              child: Image.network(article.urlToImage),
+              tag: article.urlToImage ?? "",
+              child: Image.network(article.urlToImage ?? ""),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   Text(
-                    article.description,
+                    article.description ?? "",
                   ),
                   const Divider(
                     color: Colors.grey,
                   ),
                   Text(
-                    article.title,
+                    article.title ?? "",
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -56,7 +57,7 @@ class DetailPage extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   Text(
-                    article.content,
+                    article.content ?? "",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(

@@ -1,12 +1,26 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/data/api/api_service.dart';
+import 'package:news_app/widgets/card_article.dart';
 import 'package:news_app/widgets/platform_widget.dart';
-import '../../data/model/article.dart';
-import '../detail/detail_page.dart';
+import '../../data/model/article_result.dart';
 
-class ArticleListPage extends StatelessWidget {
+class ArticleListPage extends StatefulWidget {
   const ArticleListPage({Key? key}) : super(key: key);
+
+  @override
+  State<ArticleListPage> createState() => _ArticleListPageState();
+}
+
+class _ArticleListPageState extends State<ArticleListPage> {
+  late Future<ArticlesResult> _article;
+
+  @override
+  void initState() {
+    super.initState();
+    _article = ApiService().topHeadline();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +46,38 @@ class ArticleListPage extends StatelessWidget {
     );
   }
 
-  FutureBuilder<String> _buildList(BuildContext context) {
-    return FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context).loadString("assets/articles.json"),
-      builder: (context, snapshot) {
-        final List<Article> articles = parseArticles(snapshot.data);
-        return ListView.builder(
-          itemCount: articles.length,
-          itemBuilder: (context, index) {
-            return _buildArticleItem(context, articles[index]);
-          },
-        );
+  Widget _buildList(BuildContext context) {
+    return FutureBuilder(
+      future: _article,
+      builder: (context, AsyncSnapshot<ArticlesResult> snapshot) {
+        var state = snapshot.connectionState;
+
+        if (state != ConnectionState.done) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data?.articles?.length,
+              itemBuilder: (context, index) {
+                var article = snapshot.data?.articles?[index];
+                return CardArticle(article: article as Article);
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Material(
+                child: Text(snapshot.error.toString()),
+              ),
+            );
+          } else {
+            return const Material(
+              child: Text(""),
+            );
+          }
+        }
       },
     );
   }
@@ -54,26 +89,5 @@ class ArticleListPage extends StatelessWidget {
 
     final List parsed = jsonDecode(json);
     return parsed.map((json) => Article.fromJson(json)).toList();
-  }
-
-  Widget _buildArticleItem(BuildContext context, Article article) {
-    return Material(
-      child: ListTile(
-        onTap: () {
-          Navigator.pushNamed(context, DetailPage.routeName,
-              arguments: article);
-        },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: Hero(
-          tag: article.urlToImage,
-          child: Image.network(
-            article.urlToImage,
-            width: 100,
-          ),
-        ),
-        title: Text(article.title),
-        subtitle: Text(article.author),
-      ),
-    );
   }
 }
