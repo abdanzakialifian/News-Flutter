@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/ui/home/article_list_page.dart';
-import 'package:news_app/ui/setting/setting_page.dart';
+import 'package:news_app/view/home/article_list_page.dart';
+import 'package:news_app/view/setting/setting_page.dart';
 import 'package:news_app/common/style.dart';
 import 'package:news_app/widgets/platform_widget.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/common/style.dart';
 import 'package:news_app/data/model/article_result.dart';
 
-import '../ui/detail/article_detail_page.dart';
+import '../view/detail/article_detail_page.dart';
 
 class CardArticle extends StatelessWidget {
   final Article article;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/ui/webview/article_web_view.dart';
+import 'package:news_app/view/webview/article_web_view.dart';
 
 import '../../data/model/article_result.dart';
 
