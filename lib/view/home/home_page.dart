@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/data/api/api_service.dart';
+import 'package:news_app/provider/news_provider.dart';
 import 'package:news_app/view/home/article_list_page.dart';
 import 'package:news_app/view/setting/setting_page.dart';
 import 'package:news_app/common/style.dart';
 import 'package:news_app/widgets/platform_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/home_page";
@@ -59,7 +62,12 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final List<Widget> _listWidget = [
-    const ArticleListPage(),
+    ChangeNotifierProvider(
+      create: (context) => NewsProvider(
+        apiService: ApiService(),
+      ),
+      child: const ArticleListPage(),
+    ),
     const SettingPage()
   ];
 }
